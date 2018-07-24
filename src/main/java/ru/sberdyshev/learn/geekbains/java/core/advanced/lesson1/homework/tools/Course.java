@@ -26,6 +26,7 @@ public class Course {
     }
 
     public void doIt(Team team) {
+        //генерим лист результатов с количеством элементов, равным количеству людей в команде
         List<RaceResult> raceResults = new ArrayList<RaceResult>();
         for (int i = 0; i < team.getSize(); i++) {
             raceResults.add(RaceResult.getRandomResult());

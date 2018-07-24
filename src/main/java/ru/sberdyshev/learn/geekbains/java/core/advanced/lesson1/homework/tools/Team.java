@@ -10,6 +10,7 @@ import java.util.List;
 public class Team {
     private static final String DEFAULT_TEAM_NAME = "default team";
 
+    //Что делать с жестью ниже? (Если нужен список имен по умолчанию)
     private static final String DEFAULT_TEAMMATE_NAME_1 = "Anton";
     private static final String DEFAULT_TEAMMATE_NAME_2 = "Nick";
     private static final String DEFAULT_TEAMMATE_NAME_3 = "Mike";
@@ -67,6 +68,8 @@ public class Team {
     public void setResults(List<RaceResult> results) {
         Iterator<RaceResult> raceResultIterator = results.iterator();
         Iterator<TeamMate> teamMateIterator = team.iterator();
+        //записываем результаты из входящего списка каждому члену команды по очереди.
+        //Если список результатов коничился раньше списка членов команды, то заполняем дефолтными значениями
         while (teamMateIterator.hasNext()) {
             RaceResult result;
             if (raceResultIterator.hasNext()) {
