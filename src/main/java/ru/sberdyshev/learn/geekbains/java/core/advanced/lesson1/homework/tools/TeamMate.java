@@ -9,7 +9,7 @@ public class TeamMate {
 
     public TeamMate(String name) {
         this.name = name;
-        state = RaceResult.NOTSTARTED;
+        state = RaceResult.getDefaultResult();
     }
 
     public String getName() {
