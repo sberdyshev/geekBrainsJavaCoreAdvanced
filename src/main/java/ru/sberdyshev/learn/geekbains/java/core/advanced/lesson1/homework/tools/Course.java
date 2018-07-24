@@ -9,6 +9,14 @@ import java.util.List;
 public class Course {
     private List<String> obstacles;
 
+    public Course() {
+    }
+
+    public Course(List<String> obstacles) {
+
+        this.obstacles = obstacles;
+    }
+
     public List<String> getObstacles() {
         return obstacles;
     }
