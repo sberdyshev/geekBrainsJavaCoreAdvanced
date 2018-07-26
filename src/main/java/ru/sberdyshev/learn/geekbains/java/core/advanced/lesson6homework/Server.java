@@ -1,5 +1,7 @@
 package ru.sberdyshev.learn.geekbains.java.core.advanced.lesson6homework;
 
+import ru.sberdyshev.learn.geekbains.java.core.advanced.lesson6homework.utils.Constants;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -7,9 +9,15 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Server {
+    final private int PORT = 8189;
     private ServerSocket serverSocket;
     private Socket socket;
-    final private int PORT = 8189;
+    private boolean hasEnded = false;
+
+    public static void main(String[] args) {
+        Server server = new Server();
+        server.start();
+    }
 
     public void start() {
         try {
@@ -17,23 +25,38 @@ public class Server {
             System.out.println("Server has started");
             socket = serverSocket.accept();
             System.out.println("Client has connected");
-            Scanner scanner = new Scanner(socket.getInputStream());
-            PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
-            while(true) {
-                String line = scanner.nextLine();
-                if ("end".equals(line)) {
-                    break;
+            final Scanner remoteScanner = new Scanner(socket.getInputStream());
+            final PrintWriter remotePrintWriter = new PrintWriter(socket.getOutputStream());
+            final Scanner localScanner = new Scanner(System.in);
+            final PrintWriter localPrintWriter = new PrintWriter(System.out);
+            new Thread(new Runnable() {
+                public void run() {
+                    while (true) {
+                        String line = remoteScanner.nextLine();
+                        if (hasEnded || Constants.END_COMMAND.equals(line)) {
+                            break;
+                        }
+                        localPrintWriter.println("Echo: " + line);
+                        localPrintWriter.flush();;
+                    }
                 }
-                printWriter.print("Echo: " + line);
-                printWriter.flush();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+            }).start();
+            new Thread(new Runnable() {
+                public void run() {
+                    while (true) {
+                        String line = localScanner.nextLine();
+                        if (Constants.END_COMMAND.equals(line)) {
+                            remotePrintWriter.println(Constants.END_COMMAND);
+                            hasEnded = true;
+                            break;
+                        }
+                        remotePrintWriter.println(line);
+                        remotePrintWriter.flush();
+                    }
+                }
+            }).start();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        Server server = new Server();
-        server.start();
     }
 }
