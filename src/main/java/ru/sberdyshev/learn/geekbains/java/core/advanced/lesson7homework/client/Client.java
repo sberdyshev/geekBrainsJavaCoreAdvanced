@@ -12,6 +12,7 @@ import java.net.Socket;
 /**
  * @author SBerdyshev
  */
+
 public class Client {
     private ClientAuthUI clientAuthUI;
     private ClientChatUI clientChatUI;

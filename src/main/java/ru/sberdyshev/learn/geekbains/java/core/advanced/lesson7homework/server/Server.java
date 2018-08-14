@@ -75,7 +75,7 @@ public class Server {
             final boolean isPrivateMessage = recievedMessage.contains(Constants.COMMAND_PRIVATE_MESSAGE_START);
             final boolean isClientDisconnected = recievedMessage.contains(Constants.COMMAND_CLIENT_DISCONNECTED);
 
-
+            //TODO расставить if в порядке частоты вызова
             if (isAuthCommand && hasSourceUser) {
                 //contains user name
                 final String userName = Message.getDataFromLine(recievedMessage, Constants.COMMAND_SOURCE_USER_START, Constants.COMMAND_SOURCE_USER_END);
@@ -122,6 +122,7 @@ public class Server {
     }
 
     private void sendBroadCastMessage(final String message, final String exceptUser) {
+        //TODO проверить, может ли entry быть объявлена вне for-а
         for (ConcurrentHashMap.Entry<String, ChatClient> entry : chatClientMap.entrySet()) {
             if (!exceptUser.equals(entry.getKey())) {
                 final ChatClient chatClient = entry.getValue();
