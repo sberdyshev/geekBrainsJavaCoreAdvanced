@@ -20,5 +20,14 @@
         </plugins>
     </build>
 
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven -->
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-maven</artifactId>
+            <version>1.18.0.0</version>
+            <type>pom</type>
+        </dependency>
+    </dependencies>
 
 </project>
